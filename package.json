@@ -1,5 +1,5 @@
 {
-  "name": "wechat-pay",
+  "name": "wxpay-v3",
   "version": "1.0.0",
   "description": "微信支付API v3 for nodejs",
   "main": "lib/index.js",
