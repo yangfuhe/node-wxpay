@@ -1,0 +1,26 @@
+{
+  "name": "wechat-pay",
+  "version": "1.0.0",
+  "description": "微信支付API v3 for nodejs",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangfuhe/node-wechat-pay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yangfuhe/node-wechat-pay/issues"
+  },
+  "homepage": "https://github.com/yangfuhe/node-wechat-pay#readme",
+  "dependencies": {
+    "jsrsasign": "^10.1.12",
+    "urllib": "^2.36.1"
+  }
+}
