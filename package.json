@@ -21,6 +21,7 @@
   "homepage": "https://github.com/yangfuhe/node-wechat-pay#readme",
   "dependencies": {
     "jsrsasign": "^10.1.12",
+    "node-aes-gcm": "^0.2.5",
     "urllib": "^2.36.1"
   }
 }
