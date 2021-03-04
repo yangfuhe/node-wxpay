@@ -158,7 +158,7 @@ console.log(result)
 ```javascript
 /*
 在new Paymeny()时或在此传入api_v3_private_key
-则会解密decrypt_certificate，你可通过decrypt_certificate获取public key
+则会解密encrypt_certificate，你可通过decrypt_certificate获取public key
 */
 let result = await payment.getCertificates(api_v3_private_key)
 console.log(result)
