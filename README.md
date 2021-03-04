@@ -30,6 +30,8 @@ const paymnet = new Payment({
     privateKey: require('fs').readFileSync('*_key.pem证书文件路径').toString(),//或者直接复制证书文件内容
     serial_no:'证书序列号',
     notify_url: '支付退款结果通知的回调地址',
+    api_v3_private_key:'api v3密钥',
+    publicKey:'平台证书解密出来的公钥'
 })
 ```
 
@@ -39,6 +41,12 @@ const paymnet = new Payment({
 - `privateKey` - 商户API证书*_key.pem中内容  可在微信支付平台获取(必填, 在微信商户管理界面获取)
 - `serial_no` - 证书序列号(必填, 证书序列号，可在微信支付平台获取 也可以通过此命令获取(*_cert.pem为你的证书文件) openssl x509 -in *_cert.pem -noout -serial )
 - `notify_url` - 支付退款结果通知的回调地址(选填)
+  - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
+  - 调用相关API时传入新值则使用新值
+- `api_v3_private_key` - api v3密钥(选填)
+  - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
+  - 调用相关API时传入新值则使用新值
+- `publicKey` - 平台证书解密出来的公钥(选填)
   - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
   - 调用相关API时传入新值则使用新值
 
