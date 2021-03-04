@@ -152,13 +152,14 @@ let result = await payment.getRefund({
 console.log(result)
 ```
 
-### 
-获取平台证书列表 测试命令 node ./lib/test.js --method=getCertificates
-获取平台证书列表，new Paymeny()传了api_v3_private_key或在此传入api_v3_private_key
-则会解密decrypt_certificate，你可通过decrypt_certificate获取public key
-获取方式：1新建一个*_cert.pem 2.通过 openssl x509 -in *_cert.pem -pubkey -noout 获取公钥
+### 获取平台证书列表 测试命令 node ./lib/test.js --method=getCertificates
+
 
 ```javascript
+/*
+在new Paymeny()时或在此传入api_v3_private_key
+则会解密decrypt_certificate，你可通过decrypt_certificate获取public key
+*/
 let result = await payment.getCertificates(api_v3_private_key)
 console.log(result)
 ```
