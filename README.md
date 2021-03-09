@@ -27,26 +27,20 @@ const Payment = require('wxpay-v3');
 const paymnet = new Payment({
     appid: '公众号ID',
     mchid: '微信商户号',
-    privateKey: require('fs').readFileSync('*_key.pem证书文件路径').toString(),//或者直接复制证书文件内容
+    private_key: require('fs').readFileSync('*_key.pem证书文件路径').toString(),//或者直接复制证书文件内容
     serial_no:'证书序列号',
+    apiv3_private_key:'api v3密钥',
     notify_url: '支付退款结果通知的回调地址',
-    api_v3_private_key:'api v3密钥',
-    publicKey:'平台证书解密出来的公钥'
 })
 ```
 
 #### config说明:
 - `appid` - 公众号ID(必填)
 - `mchid` - 微信商户号(必填)
-- `privateKey` - 商户API证书*_key.pem中内容  可在微信支付平台获取(必填, 在微信商户管理界面获取)
+- `private_key` - 商户API证书*_key.pem中内容  可在微信支付平台获取(必填, 在微信商户管理界面获取)
 - `serial_no` - 证书序列号(必填, 证书序列号，可在微信支付平台获取 也可以通过此命令获取(*_cert.pem为你的证书文件) openssl x509 -in *_cert.pem -noout -serial )
+- `apiv3_private_key` - apiv3密钥 在创建实例时通过apiv3密钥会自动获取平台证书的公钥，以便于验证签名(必填)
 - `notify_url` - 支付退款结果通知的回调地址(选填)
-  - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
-  - 调用相关API时传入新值则使用新值
-- `api_v3_private_key` - api v3密钥(选填)
-  - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
-  - 调用相关API时传入新值则使用新值
-- `publicKey` - 平台证书解密出来的公钥(选填)
   - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
   - 调用相关API时传入新值则使用新值
 
@@ -153,32 +147,19 @@ console.log(result)
 ```
 
 ### 获取平台证书列表 测试命令 node ./lib/test.js --method=getCertificates
-
-
 ```javascript
-/*
-在new Paymeny()时或在此传入api_v3_private_key
-则会解密encrypt_certificate，你可通过decrypt_certificate获取public key
-*/
-let result = await payment.getCertificates(api_v3_private_key)
+let result = await payment.getCertificates()
 console.log(result)
 ```
 
 ### 解密支付退款通知参数
 ```javascript
 let result = await payment.decodeParams({
-    "id":"ffd75d50-9b1f-5051-8205-29820eb35485",
-    "create_time":"2021-03-03T15:45:12+08:00",
-    "resource_type":"encrypt-resource",
-    "event_type":"REFUND.SUCCESS",
-    "summary":"退款成功",
-    "resource":{
-        "original_type":"refund",
-        "algorithm":"AEAD_AES_256_GCM",
-        "ciphertext":"d2Zi2VToOGXqB3K6bgQaFKktgA3AHm+cJg0vGZPcD22OUZ+CBymtrFJsFtaKKEwebSDN8Habic7NJVpKJpAxZd8ejm32v4UePg139/gj+X7vJtqB39ZkjZXLH973LT5R5yZQ351R3onlpx9JILN2+FNEbrUNenjgEufuQn45b9jwGSBX/sU6n/+gsCdt8+sSkbMy37sSX1bjMicHzte27fR0QSuO1TDjZjjDqP2ou0j7Jb+x9RRtWlbZ1hOYe7AhSTFzOXvkdCq0M6P6ja1cc2olV9xG8UzKxZN0JLnoqIGWwPzTVOPqmt/N3/MrzCK3TT1mNagBnhqEvSXhL9KUjpAIY8J6tkjfoG+9QwnJA8kW48C3nGsgePvNYvikJooQii7rx78Y2paR7cS8Pn8+sxKg4q91DiovBSdW2/ePDruI6SH/FWFrPmLQCG11fCjz/C9o6bqjaSsHKMaSVSAW9e/et04MP6GcZIDweG5AN9FgOXMI",
-        "associated_data":"refund",
-        "nonce":"AqfRSFm7h9Sa"
-    }
+    "original_type":"refund",
+    "algorithm":"AEAD_AES_256_GCM",
+    "ciphertext":"d2Zi2VToOGXqB3K6bgQaFKktgA3AHm+cJg0vGZPcD22OUZ+CBymtrFJsFtaKKEwebSDN8Habic7NJVpKJpAxZd8ejm32v4UePg139/gj+X7vJtqB39ZkjZXLH973LT5R5yZQ351R3onlpx9JILN2+FNEbrUNenjgEufuQn45b9jwGSBX/sU6n/+gsCdt8+sSkbMy37sSX1bjMicHzte27fR0QSuO1TDjZjjDqP2ou0j7Jb+x9RRtWlbZ1hOYe7AhSTFzOXvkdCq0M6P6ja1cc2olV9xG8UzKxZN0JLnoqIGWwPzTVOPqmt/N3/MrzCK3TT1mNagBnhqEvSXhL9KUjpAIY8J6tkjfoG+9QwnJA8kW48C3nGsgePvNYvikJooQii7rx78Y2paR7cS8Pn8+sxKg4q91DiovBSdW2/ePDruI6SH/FWFrPmLQCG11fCjz/C9o6bqjaSsHKMaSVSAW9e/et04MP6GcZIDweG5AN9FgOXMI",
+    "associated_data":"refund",
+    "nonce":"AqfRSFm7h9Sa"
 })
 console.log(result)
 ```
@@ -186,21 +167,15 @@ console.log(result)
 
 ### 验证签名
 ```javascript
-    let data =  `1614829763
-Eeumuhd3zA5TirWeJUCLCpkENYM8PSUA
-{"id":"3b66121d-c9b9-5d61-9d92-eeec248e993d","create_time":"2021-03-04T11:49:23+08:00","resource_type":"encrypt-resource","event_type":"TRANSACTION.SUCCESS","summary":"支付成功","resource":{"original_type":"transaction","algorithm":"AEAD_AES_256_GCM","ciphertext":"PB305U6jR6TN8mBzbzGts5TaKnDXQt/7C+uJpGnvOT1SyCvI18L4f42eTZtrZv+5XUdOkxwEHGWDVl2MwbvpgLjLdjyisaHc+uRQCDoYlusiaeDJzd515Rl36nqmdPD8xFKZahWZBBkAlCgXLuW3qcdxSISTk/pyqPziwUtFKfMeq3LEEm4z8DfBM9cVXJrN8EiY2WaQsm+lGnZAV4+pxCELj67xmccXs3JgJwHSKE4exqW919atQWTwJHzuP3WNd+Xvp0zwm9RtDPTvZ8egehqqBw+DARC5jg8MmDtlMR2sTgH2xq6b4+QqLXPPIooOyvEZKMOteSI4FmSfPNwDfZ26D4ga9yGRIxSQKkWDq3QRNhOzvmSkCax08t2hdq12NxBSE9y7aZkjKIr4/uMEtKDU/3wcSoVKlawfN1hlCKo2nWbdKH1avRvc6FAFxXHtXRw0Y0MRnSk8gPMF/T+QqEMRJniXbrylt21xR0AEKbIVk0xK9jvhXex0AvST4x3eKM0r4DXkmL/pCjo1XmZLZIMc2uJ1jJEyqWcURXirrxADCATIAEWOu1hNL6PE","associated_data":"transaction","nonce":"KcsMoPx5UW1i"}}
-`
-    let sign = 'ame3lX1y6FeXrlBN973M1Dhg5n77M1wVsD3VgeyZlb8c3dz/hpQ+9vNOMBBHGdv8kDIfZUxKDdfoeUaVJhfqAEn9ZV4x112ntEzCHpJtIXQ3rr8fScY7cO71EN/QyQHtY1Ovt8U2Yr891iYaLujUrBHtWrhiR6UKecRA+/RgsUBYh4D10rrqW5ywNrLVN+PSuG4QB85bz3jSslMvRrSG7HP/Xwo3e2sWMDuQ2Uadefu+8/FK1P3KDLDO2fq5teSaaqs7oof2WpV6zrVtyQ+P4p5t8NJ0ExlOSAs2xGJ0+xi+U996tq3VYZXf/4nVsfGW9rn0m/mOrYTmiST9PF+q1g=='
-    let publicKey = 
-`-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5M+uTIKboxHq27S3abiz
-BYRSTEUTEf6eyFJKA6vseQ0sOBNcPT8QdcEWV6V9Q7skWJzt4JmZ3RM38BeA5khI
-0Cpy4JDoMw9qXxQmEGhhqXzLju4XH2Tkj9WiMSpoMeRyaE8GMCTbQ0firSOC+IiR
-G+ru5nsVC3Pop3HkyGnlbBmM+ljqIs4MXKSN1vKWRke4hY7RHaHkulAErAtcTmIh
-sA8JIrs3Qb89/H6tJ8hbwX0j6WuQQUhA8GhLbNr2W1vhcdN9aZ3I9pMUxw2/21GV
-Q9YtKHIzolXQJx/a/dQnK7nXtv2Qgtp+NEQTUS98MkP2FhmI89xRem1dWQ/nMxc/
-9QIDAQAB
------END PUBLIC KEY-----`
-    let result = await payment.verifySign(data,sign,publicKey)
+setTimeout(async ()=>{
+    //timestamp,nonce,serial,signature均在HTTP头中获取，body为请求参数
+    let result = await payment.verifySign({
+        timestamp:'1614829763',
+        nonce:'Eeumuhd3zA5TirWeJUCLCpkENYM8PSUA',
+        serial:'3DEA336346E96C002B7B0D514D424C8DEDBF9145',
+        signature:'ame3lX1y6FeXrlBN973M1Dhg5n77M1wVsD3VgeyZlb8c3dz/hpQ+9vNOMBBHGdv8kDIfZUxKDdfoeUaVJhfqAEn9ZV4x112ntEzCHpJtIXQ3rr8fScY7cO71EN/QyQHtY1Ovt8U2Yr891iYaLujUrBHtWrhiR6UKecRA+/RgsUBYh4D10rrqW5ywNrLVN+PSuG4QB85bz3jSslMvRrSG7HP/Xwo3e2sWMDuQ2Uadefu+8/FK1P3KDLDO2fq5teSaaqs7oof2WpV6zrVtyQ+P4p5t8NJ0ExlOSAs2xGJ0+xi+U996tq3VYZXf/4nVsfGW9rn0m/mOrYTmiST9PF+q1g==',
+        body:'{"id":"3b66121d-c9b9-5d61-9d92-eeec248e993d","create_time":"2021-03-04T11:49:23+08:00","resource_type":"encrypt-resource","event_type":"TRANSACTION.SUCCESS","summary":"支付成功","resource":{"original_type":"transaction","algorithm":"AEAD_AES_256_GCM","ciphertext":"PB305U6jR6TN8mBzbzGts5TaKnDXQt/7C+uJpGnvOT1SyCvI18L4f42eTZtrZv+5XUdOkxwEHGWDVl2MwbvpgLjLdjyisaHc+uRQCDoYlusiaeDJzd515Rl36nqmdPD8xFKZahWZBBkAlCgXLuW3qcdxSISTk/pyqPziwUtFKfMeq3LEEm4z8DfBM9cVXJrN8EiY2WaQsm+lGnZAV4+pxCELj67xmccXs3JgJwHSKE4exqW919atQWTwJHzuP3WNd+Xvp0zwm9RtDPTvZ8egehqqBw+DARC5jg8MmDtlMR2sTgH2xq6b4+QqLXPPIooOyvEZKMOteSI4FmSfPNwDfZ26D4ga9yGRIxSQKkWDq3QRNhOzvmSkCax08t2hdq12NxBSE9y7aZkjKIr4/uMEtKDU/3wcSoVKlawfN1hlCKo2nWbdKH1avRvc6FAFxXHtXRw0Y0MRnSk8gPMF/T+QqEMRJniXbrylt21xR0AEKbIVk0xK9jvhXex0AvST4x3eKM0r4DXkmL/pCjo1XmZLZIMc2uJ1jJEyqWcURXirrxADCATIAEWOu1hNL6PE","associated_data":"transaction","nonce":"KcsMoPx5UW1i"}}'
+    })
     console.log(result)
+},2000)
 ```
