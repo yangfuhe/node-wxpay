@@ -1,6 +1,6 @@
 {
   "name": "wxpay-v3",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "微信支付API v3 for nodejs",
   "main": "lib/index.js",
   "directories": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yangfuhe/node-wechat-pay.git"
+    "url": "git+https://github.com/yangfuhe/node-wxpay.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yangfuhe/node-wechat-pay/issues"
+    "url": "https://github.com/yangfuhe/node-wxpay/issues"
   },
-  "homepage": "https://github.com/yangfuhe/node-wechat-pay#readme",
+  "homepage": "https://github.com/yangfuhe/node-wxpay#readme",
   "dependencies": {
     "@peculiar/x509": "^1.2.1",
     "jsrsasign": "^10.1.12",
