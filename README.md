@@ -3,11 +3,11 @@
 
 
 ## 功能概述
-- `完成模块` jsapi,native,h5,app统一下单，付款交易查询,退款,退款交易查询,解密通知参数,公钥获取,验证签名
+- `完成模块` jsapi,native,h5,app统一下单，付款交易查询,退款,退款交易查询,解密通知参数,公钥获取,验证签名,交易账单,资金账单,下载账单
 - `支付模式支持`  付款码/公众号/小程序/APP/H5/扫码支付
 
 ## 交流
-微信：yangfuhe036，如有任何问题欢迎加微信交流。
+微信：yangfuhe036，如有任何问题欢迎加微信交流。喜欢或对你有帮助，欢迎右上角 star，非常感谢！
 
 ## 使用前必读
 #### 版本要求
@@ -146,7 +146,7 @@ let result = await payment.getRefund({
 console.log(result)
 ```
 
-### 获取平台证书列表 测试命令 node ./lib/test.js --method=getCertificates
+### 获取平台证书列表
 ```javascript
 let result = await payment.getCertificates()
 console.log(result)
@@ -179,3 +179,28 @@ setTimeout(async ()=>{
     console.log(result)
 },2000)
 ```
+
+### 申请交易账单 
+```javascript
+let result = await payment.tradebill({
+    bill_date:'2021-03-03'
+})
+console.log(result)
+```
+
+### 申请资金账单 
+```javascript
+let result = await payment.fundflowbill({
+    bill_date:'2021-03-03'
+})
+console.log(result)
+```
+
+### 下载账单 
+```javascript
+let result = await payment.downloadbill('https://api.mch.weixin.qq.com/v3/billdownload/file?token=ktWgOuBvGNvmCk0NaOTMF41tG3yWsZrdM4zdgl10r1GRRNo4tG5V9mPi04ku-PY8&tartype=gzip')
+console.log(result)
+```
+
+## 交流
+微信：yangfuhe036，如有任何问题欢迎加微信交流。喜欢或对你有帮助，欢迎右上角 star，非常感谢！
