@@ -1,5 +1,5 @@
-# node-wechat-pay
-微信支付API v3 for nodejs
+# node-wxpay
+微信支付APIv3 for nodejs
 
 
 ## 功能概述
