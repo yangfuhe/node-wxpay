@@ -1,6 +1,6 @@
 {
   "name": "wxpay-v3",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "微信支付API v3 for nodejs",
   "main": "lib/index.js",
   "directories": {
