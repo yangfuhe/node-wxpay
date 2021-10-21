@@ -22,7 +22,6 @@
   "dependencies": {
     "@peculiar/x509": "^1.2.1",
     "jsrsasign": "^10.1.12",
-    "node-aes-gcm": "^0.2.5",
     "urllib": "^2.36.1"
   }
 }
