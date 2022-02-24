@@ -31,6 +31,7 @@ const paymnet = new Payment({
     serial_no:'证书序列号',
     apiv3_private_key:'api v3密钥',
     notify_url: '支付退款结果通知的回调地址',
+    oversea : false,    //默认是微信支付国内版；境外版url有所不同
 })
 ```
 
@@ -43,6 +44,7 @@ const paymnet = new Payment({
 - `notify_url` - 支付退款结果通知的回调地址(选填)
   - 可以在初始化的时候传入设为默认值, 不传则需在调用相关API时传入
   - 调用相关API时传入新值则使用新值
+- 'oversea' - 布尔类型值参数让api兼容微信支付国内，境外两个版本的url
 
 
 ### jsapi统一下单
